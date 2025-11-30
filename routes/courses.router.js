@@ -1,15 +1,15 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const courseController = require('../controllers/courses.controller');
-const coursesValidations = require('../middlewares/validations/courses');
+import * as courseController from '../controllers/courses.controller.js';
+import { createCourseValidaions } from '../middlewares/validations/courses.js';
 
 
 router.route('/')
-        .get( courseController.getAllCourses)
-        .post(coursesValidations.createCourseValidaions(), courseController.createCourse)
+        .get(courseController.getAllCourses)
+        .post(createCourseValidaions(), courseController.createCourse)
 router.route('/:id')
         .get(courseController.showCourse)
         .put(courseController.updateCourse)
         .delete(courseController.deleteCourse)
 
-module.exports = router;
+export default router;
