@@ -1,12 +1,12 @@
 import { body } from 'express-validator';
 
 
-const createCourseValidaions = () => {
+export const createCourseValidaions = () => {
 
     return [
-        body('title')
+        body('name')
             .notEmpty()
-            .withMessage('Title is Required'),
+            .withMessage('Name is Required'),
         body('price')
             .notEmpty()
             .withMessage('Price is Required')
@@ -14,5 +14,3 @@ const createCourseValidaions = () => {
             .withMessage('Price is Required with minimum 2 digits  '),
     ]
 }
-
-export { createCourseValidaions };

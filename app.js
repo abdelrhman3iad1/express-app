@@ -1,16 +1,29 @@
 import express from 'express';
 import mongoose from 'mongoose';
-const url = "mongodb+srv://abdelrhmanaiiad_db_user:<Password>@cluster0.6ogkr2l.mongodb.net/?appName=Cluster0"
+import dotenv from 'dotenv';
 const app = express();
 import courseRouter from './routes/courses.router.js';
-app.use(express.json());
+import ApiResponse from './utils/api_response.js';
+import cors from 'cors';
 
-mongoose.connect(url).then(() => {
+dotenv.config();
+app.use(express.json());
+app.use(cors());
+
+const PORT = process.env.PORT || 5000;
+const URL = process.env.MONGO_URL;
+
+mongoose.connect(URL).then(() => {
     console.log('mongoose connected');
 });
 
 app.use('/api/courses', courseRouter);
 
-app.listen(5000, () => {
-    console.log('app running on port 5000');
+
+app.use((req, res, next) => {
+    return ApiResponse(res, 404, "fail", "Page not found");
+});
+
+app.listen(PORT, () => {
+    console.log(`app running on port ${PORT}`);
 });
